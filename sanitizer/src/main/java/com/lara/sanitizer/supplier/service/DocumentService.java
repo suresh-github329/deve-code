@@ -1,0 +1,47 @@
+package com.lara.sanitizer.supplier.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.lara.sanitizer.supplier.entity.Document;
+import com.lara.sanitizer.supplier.repository.DocumentRepository;
+
+@Service
+public class DocumentService {
+
+	@Autowired
+	private DocumentRepository documentRepo;
+	
+	public void deleteDocumentBySupplierId(Integer id) {
+		List<Document> documents =documentRepo.findDocumentBySupplierId(id);
+		if(documents !=null && documents.size() !=0) {
+			documentRepo.deleteAll();
+		}
+		System.out.println("All got deleted");
+	}
+	
+	public Document Save(Document document) {
+		return documentRepo.save(document);
+	}
+	
+	public List<Document> readAll(){
+		List<Document> documents=(List<Document>) documentRepo.findAll();
+		return documents;
+	}
+	
+	public Document read(Integer id) {
+		return documentRepo.findById(id).get();
+	}
+	
+	public Document update(Document document) {
+		return documentRepo.save(document);
+	}
+	
+	public Document delete(Integer id) {
+		 Document document=documentRepo.findById(id).get();
+		 documentRepo.deleteById(id);
+		 return document;
+	}
+}
